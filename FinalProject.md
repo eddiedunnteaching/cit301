@@ -155,7 +155,7 @@ If you followed along so far this command should get you in
 ```bash
 ssh -i <path to your kp.pem> ubuntu@<public IP of instance>
 
-I will ask you if you want to save teh key in your local keystore. Say yes.
+I will ask you if you want to save the key in your local keystore. Say yes.
 
 ![success login](./images/success_login.png)
 Take a screen shot and submit.

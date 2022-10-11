@@ -1,9 +1,9 @@
-## Introduction and motivation
+
 
 
 The way these AWS Vocereum lab environments are setup is a curse in a lot of ways.
 
-1. Although you can continue a lab session indefinately by clicking the `:arrow_forward: Start Lab` button again to reset the time to `1:30`. You must remember to do this.
+1. Although you can continue a lab session indefinately by clicking the `:arrow_forward: Start Lab` button again to reset the time to `1:30`. You must remember to do this. I suggest setting a timer for an hour and 15 minutes or something so you are not right up against the time and clicking the button, repeat.
 
 2. It won't (or at least I have not figured out how) to make a `user` in any of these labs so that you can make a programmatic access key that you can then use for any sort of automation of the actual AWS infrastructure like you can do with tools like: `awscli`, `Cloud Formation`, `Terraform`, etc. (Heck even `Ansible`)
 
@@ -85,7 +85,7 @@ The first thing you want to do when you first start Vocereum is to create a `key
 
 The are a couple of ways to get to this section. One is by clicking on the navigating to the `EC2` dashboard
 
-![EC2 Dashboard](./images/ec2_dashboard.png)
+![EC2 Dashboard](./images/ec2_dash.png)
 
 Click on the `Key pairs` link and you will be taken here:
 
@@ -154,8 +154,111 @@ If you followed along so far this command should get you in
 
 ```bash
 ssh -i <path to your kp.pem> ubuntu@<public IP of instance>
+```
 
 I will ask you if you want to save the key in your local keystore. Say yes.
 
+[ssh add key](./images/ssh_add_key.png)
+
 ![success login](./images/success_login.png)
-Take a screen shot and submit.
+
+## Take a screen shot and submit. This is the SSH Assignment
+
+
+If you get an error message about permisions then use the following command on your `.pem` file.
+
+```bash
+chmod 600 kp.pem 
+```
+
+This will make only the `user owner` able to see the contents of the private key.
+
+
+
+## Ansible and Windows
+
+There are multiple ways you can go about installing `Ansible` on your system. `Ansible` is written in `Python` and as such can be installed perhaps most easily via `pip`. If you want to go that route fine. What I have just shown you uses cygwin. You might have used something similar to `cygwin` called `MinGW` . If you have ever used the `git bash` shell that comes with `git`. This is very similar.
+
+`Ansible`'s lowest unit of code is called a [`module`](https://docs.ansible.com/ansible/latest/user_guide/modules_intro.html). 
+
+The simplest way to run `ansible` is via a method called [`ad-hoc`](https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html). As the name implies this is a method that lets you run ansible modules in a one-off manner.
+
+Before you connect to the EC2 instance via ansible we must first make sure that the `host` key has been saved in our `~/.ssh/known_hosts` file. We can do this via `ssh`. 
+
+If you get an ansible error about `Host key verification failed.` that is what is going on.
+
+Let's try out a simple ping to our EC2 instance.
+
+```bash
+ansible all --key-file=kp.pem -u ubuntu -i 44.203.84.162, -m ping
+ ````
+
+![ansible ping](./images/ansible_ping.png)
+
+
+Let's break down the command:
+
+- `all` means to imply all hosts in the inventory. In this case there is only one host in the inventory so it is really just one host.
+- `key-file` is the path to our `.pem` file we downloaded when we made our key pair.
+- `-u ubuntu` specifies that we want to connect to the instance as the user `ubuntu`. This is something that you would just have to know or read. It is an AWS ubuntu AMI thing.
+- `-i 44.203.84.162,` Is the inventory we are working with. This is usually a YAML or even `ansible` `INI` format. **Please note that the trailing comma is required or it will not parse it as a list.**
+- `-m ping` Last but certainly not least tells which module we are going to run. The ping module works much like the ping command in networking. It checks to see that the host is avaialable and you can connect and manage.
+
+Ok great. Now we know how to manage to our instances with ansible! We are on our way!
+
+Another thing we can do to simplify things is to put some of these options in a configuration file so we don't have to keep typing them. `Ansible` has an `ansible.cfg` file we can put in our project directory that serves this purpose. 
+
+Here are the contents of `ansible.cfg`
+
+```ini
+[defaults]
+
+private_key_file = kp.pem
+remote_user = ubuntu
+#inventory = inventory.yml
+
+```
+
+Now we can run our `ad-hoc` command with fewer options:
+
+```bash
+ ansible all -i 44.203.84.162, -m ping
+ ```
+
+ In a real scenario we would be running these commands on many servers at once specified by the keyword `all` in an inventory file referenced in  `ansible.cfg` as shown in the commented line above. We could then even further simplify our command incantation to something like.
+
+```bash
+ ansible all  -m ping
+ ```
+
+
+Let's do a real example with our server. Let's install an apache web server using the apt module.
+
+```bash
+ansible all -i 52.55.1.42, -m ansible.builtin.apt -a "name=apache2 state=present" --become
+```
+
+Notice:
+
+1. We do not have to know anything about how to run the actual command(s) to install the software on the server. We only need to know the name of the package.
+2. This command is `idempotent`. It will only install `apache2` if it is not already present.
+3. We used a new option `--become` this tell `ansible` that we will need to elevate permissions (run `sudo`, ie need admin access) to run this command.
+
+
+If all goes well you should now have a running web server with the default page. Note you will need to modify the security groups to allow web traffic like you do in the actual lab instructions.
+
+![apache default](./images/apache_default.png)
+
+
+You can also do things like copy files to remote systems. Again like in the actual lab instructions let's create a simple `Hello World` html file in our project directory.
+
+`index.html`
+```html
+<html><h1>Hello World!</h1></html>
+```
+
+```bash
+ansible all -i 52.55.1.42, -m ansible.builtin.copy -a "src=index.html dest=/var/www/html/index.html" --become
+```
+
+The above will replace the default apache page with our `Hello World`

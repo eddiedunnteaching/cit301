@@ -1,4 +1,4 @@
-
+## Introduction and motivation
 
 
 The way these AWS Vocereum lab environments are setup is a curse in a lot of ways.
@@ -17,7 +17,31 @@ It is bad because you have to repeat the steps by clicking in the console to cre
 
 I think this is actually a blessing as it forces you to repeat the steps enough to really drive them home and also forces you to do the automation so that you can `save` your work. Don't worry if that seems fuzzy it will make more sense.
 
-## A little perspective
+This conversation about cost concerns individuals as well as organizations and is something you should always be questioning how you can do better.
+
+A little bit of research and willingness to do things yourself can pay rewards MANY times over in cost savings. 
+
+## Cost
+
+Before we even get started since you guys have been drinking the AWS Kool Aid and this is supposed to be a vendor neutral class... Here ya go.
+
+
+***Managed Services Are Expensive***
+
+***VERY expensive***
+
+
+You can oftan save many times over in cost for whatever it is you are doing if you actually spin up the cloud resources yourself. Use both cloud and machine automation tools that leverage configuration files stored in source control so that you can roll back. Have a change control process even if it is informal. Key players on your engineering team need to know what is going on and have the ultimate opportunity to say `go` or `no go`. 
+
+As an example `Amazon RDS` is great and can give you peace of mind but you can also do replication, fail-over and fault tolerance and backups with the tools that ship with things like `postgres` or `mariadb` at a small fraction of the cost.
+
+Using cheaper providers if you do not need the features of AWS.   If all you need are need VM's in the cloud there are many other providers that can give you the same resources for much more reasonable price than AWS. Digital Ocean for instance offers managed database services that are similar to RDS but much cheaper than AWS. 
+
+If you know you have dedicated and consistent need for on-site on on-WAN resources for apps that will only be used in-house and only need to handle a set amount of traffic or maybe to service development teams. In these cases you can still get much of the benefit of the cloud environment in an on-premise environment with a product like [Open Stack](https://www.openstack.org/).
+
+[Open Stack](https://www.openstack.org/) allows your teams the ability to provision resources on-demand  much like a cloud provider but have the associated costs come under a more traditional `Cap-Ex` model. This model is much cheaper if you know you will need the dedicated capacity. Cloud computing is someone else's computers and you are paying a pretty penny to use them.
+
+## Another piece of perspective
 
 Humans are not the best at doing tasks perfectly. Even the most graceful among use  spill drinks, burn our hands, etc from time to time. This is not limited to the physical realm. Even the brightest and most sharp among us from time to time make digital flubs. Even with the tasks we have done so far in this course it is easy to get confused to what you are doing switching back and forth between the console and the directions. Even if you use split screen. I am not claiming to be the brightest or sharpest but know I have had to go back a redo at least two of the labs because I missed something and I have been doing this a for a fair minute.
 
@@ -99,7 +123,7 @@ You want to give it a name (I chose `kp`) and then select `ED25519` and `.pem` a
 
 ![success](./images/successfully_created.png)
 
-Now you just need to create the instance.
+Now you need to create the instance.
 
 - Choose a name
 - Select the default `Ubuntu` AMI (22.04)
@@ -121,10 +145,10 @@ Here we have options. If you have a preferred method then please use that.
 
 If you are on a Mac then I hope the commands you type will be the same as those using Windows. Please let me know if you have any issues.
 
-I have a project on github that has a `install.bat` file you can use to install a lite, portable version of `cygwin` with `Ansible` already included.
+I have a project on github that has a `install.bat` file you can use to install a light, portable version of `cygwin` with `Ansible` already included.
 
-[install.bat](https://raw.githubusercontent.com/eddiedunnteaching/cygwin-noadmin/main/install.bat)
-[run_shell.bat](https://raw.githubusercontent.com/eddiedunnteaching/cygwin-noadmin/main/run_shell.bat)
+1. [install.bat](https://raw.githubusercontent.com/eddiedunnteaching/cygwin-noadmin/main/install.bat)
+2. [run_shell.bat](https://raw.githubusercontent.com/eddiedunnteaching/cygwin-noadmin/main/run_shell.bat)
 
 
 - Right-Click and download these file to some directory on your computer.
@@ -158,7 +182,7 @@ ssh -i <path to your kp.pem> ubuntu@<public IP of instance>
 
 I will ask you if you want to save the key in your local keystore. Say yes.
 
-[ssh add key](./images/ssh_add_key.png)
+![ssh add key](./images/ssh_add_key.png)
 
 ![success login](./images/success_login.png)
 
@@ -181,7 +205,9 @@ There are multiple ways you can go about installing `Ansible` on your system. `A
 
 `Ansible`'s lowest unit of code is called a [`module`](https://docs.ansible.com/ansible/latest/user_guide/modules_intro.html). 
 
-The simplest way to run `ansible` is via a method called [`ad-hoc`](https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html). As the name implies this is a method that lets you run ansible modules in a one-off manner.
+## Ansible Ad-Hoc
+
+The simplest way to run `ansible` in fact runs a module by itself and is called [`ad-hoc`](https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html). As the name implies this is a method that lets you run ansible modules in a one-off manner.
 
 Before you connect to the EC2 instance via ansible we must first make sure that the `host` key has been saved in our `~/.ssh/known_hosts` file. We can do this via `ssh`. 
 
@@ -232,7 +258,7 @@ Now we can run our `ad-hoc` command with fewer options:
  ```
 
 
-Let's do a real example with our server. Let's install an apache web server using the apt module.
+Let's do another real example with our server. Let's install an apache web server using the apt module.
 
 ```bash
 ansible all -i 52.55.1.42, -m ansible.builtin.apt -a "name=apache2 state=present" --become
@@ -245,12 +271,12 @@ Notice:
 3. We used a new option `--become` this tell `ansible` that we will need to elevate permissions (run `sudo`, ie need admin access) to run this command.
 
 
-If all goes well you should now have a running web server with the default page. Note you will need to modify the security groups to allow web traffic like you do in the actual lab instructions.
+If all goes well you should now have a running web server with the default page. Note you will need to modify the AWS security group to allow web traffic like you did in the actual lab instructions.
 
 ![apache default](./images/apache_default.png)
 
 
-You can also do things like copy files to remote systems. Again like in the actual lab instructions let's create a simple `Hello World` html file in our project directory.
+You can also do things like copy files to remote systems. Again like in the actual lab instructions let's create a simple `Hello World` html file in our project directory on our local computer.
 
 `index.html`
 ```html
@@ -261,4 +287,43 @@ You can also do things like copy files to remote systems. Again like in the actu
 ansible all -i 52.55.1.42, -m ansible.builtin.copy -a "src=index.html dest=/var/www/html/index.html" --become
 ```
 
-The above will replace the default apache page with our `Hello World`
+The above will replace the default apache page with our `Hello World`.
+
+
+Outside of the package updates (which we will see whortly)  we have done the equivalent to our EC2 instance that was done to the Amazon Linux instances in the lab.
+
+What we have done is better for a couple of reasons:
+
+1. Unlike that `data` blob that just runs once and we have no way of knowing if it worked. Ansible will tell you if it could or could  not accomplish a task and give you an error message as to why so that you can troubleshoot.
+2. Since the `data` block only runs once if some knucklehead comes along and removes `apache2` then we would have to restart the entire instance. Since this is `idempotent` it will only install apache if it is missing so no unneccesary changes are made.
+
+In fact the more complex your builds are the more troublesome a solution like the one shown in the lab becomes. I have heard and like to talk about the idea of `snowflake` servers. `Snowflake` servers are the ones that require lots of attention. This is usually because everyone knows how much of a time drain it would be to rebuild if something were to happen. The data block is better than no automation I suppose but instead we want to have `cattle` servers that are similar and easily commissioned and decommisioned, configured in a simlar way, etc. This is the kind of environment `Ansible` really shines.
+
+You can also use the [`shell`](https://www.middlewareinventory.com/blog/ansible-shell-examples/) module to run commands like you would be running them on the remote system. Complete with input/output redirection.
+
+In fact many companies who get started using `Ansible` will use the `shell` module and it's `|` feature to just paste their existing shell scripts into their ansible `playbooks`. [Ansible Docs shell_module](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/shell_module.html)
+
+As a quick example let's check out how much free memory we have:
+
+```bash
+ansible all -i 3.84.57.224, -m ansible.builtin.shell -a "free -h"
+```
+
+![ansible free](./images/ansible_free.png)
+
+
+**Note: If you were doing things to lots and lots of servers at once Ansible will work through the list of hosts sustainably by only having five by default hosts executing at a given time. You can configure this to be smaller or greater.**
+
+
+## Ansible Playbooks
+
+
+`Ansible` has a concept called a [`playbook`](https://www.redhat.com/en/topics/automation/what-is-an-ansible-playbook). A `playbook`  is a `blueprint` for an automation task. It contains a list of `tasks` which are really just calls to `modules`. 
+
+There is an example first playbook [here](https://raw.githubusercontent.com/eddiedunnteaching/cit301/main/apt_update_w_reboot.yml).
+
+Download this file to the same directory you have been working.
+
+Open the file in a text editor and take a look at the steps. Can you tell what is going on?
+
+One of the best things about Ansible is that it lets us stand on the shoulders of our digital benefactors and make use of their work in a sane and reapeatable way. The Zen of Automation.

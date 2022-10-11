@@ -162,8 +162,6 @@ I will ask you if you want to save the key in your local keystore. Say yes.
 
 ![success login](./images/success_login.png)
 
-## Take a screen shot and submit. This is the SSH Assignment
-
 
 If you get an error message about permisions then use the following command on your `.pem` file.
 
@@ -173,6 +171,8 @@ chmod 600 kp.pem
 
 This will make only the `user owner` able to see the contents of the private key.
 
+
+## Take a screen shot and submit. This is the SSH Assignment
 
 
 ## Ansible and Windows

@@ -171,7 +171,7 @@ cd /cygdrive/c/Users/<username>
 This will take you to your windows home directory.
 
 
-## Ansible and Mac
+## Ansible and Mac (and Linux)
 
 `Ansible` is written in python and for a *NIX environment. This means that whether you are on a Mac or Linux it is available via `pip`. 
 

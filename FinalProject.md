@@ -139,11 +139,12 @@ Once the launch completes you will get a `Success` message.
 Click on the `instance id` link and on the instance summary page click the link to copy the public IP to your clipboard.
 
 
+
 ## Ansible and Windows
 
 If you are a Mac or Linux user skip to the next section. If you are Windows... continue on.
 
-I have a project on github that has a `install.bat` file you can use to install a light, portable version of `cygwin` with `Ansible` already included.
+While you can certainly run Ansible on windows via python and pip, to keep everyone on the same page  I have created a repo on github that has a `install.bat` file you can use to install a light, portable version of `cygwin` with `Ansible` already included.
 
 1. [install.bat](https://raw.githubusercontent.com/eddiedunnteaching/cygwin-noadmin/main/install.bat)
 2. [run_shell.bat](https://raw.githubusercontent.com/eddiedunnteaching/cygwin-noadmin/main/run_shell.bat)
@@ -173,12 +174,10 @@ This will take you to your windows home directory.
 
 ## Ansible and Mac (and Linux)
 
-`Ansible` is written in python and for a *NIX environment. This means that whether you are on a Mac or Linux it is available via `pip`. 
 
+While we are on the subject of Python, Mac and Linux. Mac as well as all Linux distributions I am aware of use Python as part of the operating system so this means there is already a version of python living on your system. You can certainly install packages via `pip` into the system Python installation but I don't recommend it. Have a look at PyEnv.
 
-While we are on the subject of Python, Mac and Linux. Mac as well as most Linux distributions use Python as part of the operating system so this means there is already a version of python living on your system. You can certainly install packages via `pip` into the system Python installation but I don't recommend it. Have a look at PyEnv.
-
-In the case of Mac though I would suggest using `Homebrew`. If you do not use already use [`Homebrew`](https://brew.sh/) Install it and then run:
+In the case of Mac though I would suggest using `Homebrew`. If you do not already use [`Homebrew`](https://brew.sh/). It is the best. Install it and then run:
 
 ```
 brew install ansible

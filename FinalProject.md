@@ -216,7 +216,7 @@ If you get an ansible error about `Host key verification failed.` that is what i
 Let's try out a simple ping to our EC2 instance.
 
 ```bash
-ansible all --key-file=kp.pem -u ubuntu -i 44.203.84.162, -m ping
+ansible all --key-file=kp.pem -u ubuntu -i <public IP of instance>, -m ping
  ````
 
 ![ansible ping](./images/ansible_ping.png)
@@ -248,7 +248,7 @@ remote_user = ubuntu
 Now we can run our `ad-hoc` command with fewer options:
 
 ```bash
- ansible all -i 44.203.84.162, -m ping
+ ansible all -i <public IP of instance>, -m ping
  ```
 
  In a real scenario we would be running these commands on many servers at once specified by the keyword `all` in an inventory file referenced in  `ansible.cfg` as shown in the commented line above. We could then even further simplify our command incantation to something like.
@@ -257,11 +257,12 @@ Now we can run our `ad-hoc` command with fewer options:
  ansible all  -m ping
  ```
 
+### Let's do something useful.
 
 Let's do another real example with our server. Let's install an apache web server using the apt module.
 
 ```bash
-ansible all -i 52.55.1.42, -m ansible.builtin.apt -a "name=apache2 state=present" --become
+ansible all -i <public IP of instance>, -m ansible.builtin.apt -a "name=apache2 state=present" --become
 ```
 
 Notice:
@@ -284,7 +285,7 @@ You can also do things like copy files to remote systems. Again like in the actu
 ```
 
 ```bash
-ansible all -i 52.55.1.42, -m ansible.builtin.copy -a "src=index.html dest=/var/www/html/index.html" --become
+ansible all -i <public IP of instance>, -m ansible.builtin.copy -a "src=index.html dest=/var/www/html/index.html" --become
 ```
 
 The above will replace the default apache page with our `Hello World`.
@@ -299,14 +300,16 @@ What we have done is better for a couple of reasons:
 
 In fact the more complex your builds are the more troublesome a solution like the one shown in the lab becomes. I have heard and like to talk about the idea of `snowflake` servers. `Snowflake` servers are the ones that require lots of attention. This is usually because everyone knows how much of a time drain it would be to rebuild if something were to happen. The data block is better than no automation I suppose but instead we want to have `cattle` servers that are similar and easily commissioned and decommisioned, configured in a simlar way, etc. This is the kind of environment `Ansible` really shines.
 
+### shell module
+
 You can also use the [`shell`](https://www.middlewareinventory.com/blog/ansible-shell-examples/) module to run commands like you would be running them on the remote system. Complete with input/output redirection.
 
 In fact many companies who get started using `Ansible` will use the `shell` module and it's `|` feature to just paste their existing shell scripts into their ansible `playbooks`. [Ansible Docs shell_module](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/shell_module.html)
 
-As a quick example let's check out how much free memory we have:
+As a quick example let's check out how much free memory we have on our servers:
 
 ```bash
-ansible all -i 3.84.57.224, -m ansible.builtin.shell -a "free -h"
+ansible all -i <public IP of instance>, -m ansible.builtin.shell -a "free -h"
 ```
 
 ![ansible free](./images/ansible_free.png)
@@ -320,10 +323,59 @@ ansible all -i 3.84.57.224, -m ansible.builtin.shell -a "free -h"
 
 `Ansible` has a concept called a [`playbook`](https://www.redhat.com/en/topics/automation/what-is-an-ansible-playbook). A `playbook`  is a `blueprint` for an automation task. It contains a list of `tasks` which are really just calls to `modules`. 
 
-There is an example first playbook [here](https://raw.githubusercontent.com/eddiedunnteaching/cit301/main/apt_update_w_reboot.yml).
+There is an example playbook [here](https://raw.githubusercontent.com/eddiedunnteaching/cit301/main/apt_update_w_reboot.yml).
 
 Download this file to the same directory you have been working.
 
-Open the file in a text editor and take a look at the steps. Can you tell what is going on?
+Open the file in a text editor and take a look at the steps. Can you tell what is going on? One of the things I like about Ansible it is (usually haha) clear what is going on.
 
-One of the best things about Ansible is that it lets us stand on the shoulders of our digital benefactors and make use of their work in a sane and reapeatable way. The Zen of Automation.
+![update server](./images/update_server.png)
+
+At first glance and as previously mentioned the file is written in YAML. Yay. Let's break down each part.
+
+The very first line of the file should have an otherwise empty line with three hyphens `---`.
+
+Next we have some configuration options that will apply to the rest of the elements in the `playbook`.
+
+- `hosts: all` Means that this playbook will run against all hosts in the inventory by default.
+- `become: yes` Means that `ansible` will elevate priviledges by running things with `sudo`.
+- `gather_facts: no` Means that `ansible` will not run it's normal process of figuring out different things about the remote server that you can use. If you do not need it it can speed things up a lot.
+
+The next section has the actual `tasks` that ansible will perform.
+
+1. The first step uses the `apt` module to update the list of available packages and versions from the apt repositories.
+2. Next step, again with the `apt` module we are actually updating the packages that need updating on our server.
+3. Checks to see if the updates made any changes that require a reboot to take effect.
+4. If a reboot is needed, perform the reboot.
+
+
+As you can see each task has an associated name. If used this makes it really easy to see what is going on when your playbooks are running.
+
+Now let's run our playubook but before we do that we need to learn the command for running playbooks. The command is un-ironically `ansible-playbook`.
+
+`ansible-playbook` takes many of the same options as the ad-hoc `ansible` command but instead of specifying a `module` and the servers you are targeting (ie `all` in our examples), you specify the YAML file instead that contains that information. Let's see an example with the `playbook` we just looked at.
+
+```bash
+ansible-playbook -i <public IP of instance>, apt_update_w_reboot.yml
+```
+
+![playbook run](./images/playbook_run.png)
+
+Awesome!
+
+As you probably noticed this image had an update that required a reboot.
+
+
+## Your Task
+
+Create a playbook that does the same tasks as the `data` blob from the original lab.
+
+You should have:
+
+1. Installed some kind of web server (we have demonstrated apache)
+2. Place some kind of `Hello World`-y web page as the default page. 
+3. Update all packages and reboot if required.
+
+Submit your YAML file.
+
+One of the best things about Ansible is that it lets us stand on the shoulders of our digital benefactors and make use of their work in a sane and reapeatable way. The Zen of Automation. This is a perfect example. 

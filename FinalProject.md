@@ -139,11 +139,9 @@ Once the launch completes you will get a `Success` message.
 Click on the `instance id` link and on the instance summary page click the link to copy the public IP to your clipboard.
 
 
-## Connecting to the AWS instances via SSH.
+## Ansible and Windows
 
-Here we have options. If you have a preferred method then please use that. 
-
-If you are on a Mac then I hope the commands you type will be the same as those using Windows. Please let me know if you have any issues.
+If you are a Mac or Linux user skip to the next section. If you are Windows... continue on.
 
 I have a project on github that has a `install.bat` file you can use to install a light, portable version of `cygwin` with `Ansible` already included.
 
@@ -171,6 +169,24 @@ cd /cygdrive/c/Users/<username>
 ```
 
 This will take you to your windows home directory.
+
+
+## Ansible and Mac
+
+`Ansible` is written in python and for a *NIX environment. This means that whether you are on a Mac or Linux it is available via `pip`. 
+
+
+While we are on the subject of Python, Mac and Linux. Mac as well as most Linux distributions use Python as part of the operating system so this means there is already a version of python living on your system. You can certainly install packages via `pip` into the system Python installation but I don't recommend it. Have a look at PyEnv.
+
+In the case of Mac though I would suggest using `Homebrew`. If you do not use already use [`Homebrew`](https://brew.sh/) Install it and then run:
+
+```
+brew install ansible
+```
+
+Alighty! Let's get started.
+
+## Connecting to the AWS instances via SSH.
 
 OK now... connecting to this instance with `SSH`
 

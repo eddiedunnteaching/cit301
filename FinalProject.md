@@ -138,13 +138,13 @@ Once the launch completes you will get a `Success` message.
 
 Click on the `instance id` link and on the instance summary page click the link to copy the public IP to your clipboard.
 
-
+There are multiple ways you can go about installing `Ansible` on your system. `Ansible` is written in `Python` and as such can be installed perhaps most easily via `pip`. 
 
 ## Ansible and Windows
 
 If you are a Mac or Linux user skip to the next section. If you are Windows... continue on.
 
-While you can certainly run Ansible on windows via python and pip, to keep everyone on the same page  I have created a repo on github that has a `install.bat` file you can use to install a light, portable version of `cygwin` with `Ansible` already included.
+You can certainly run Ansible on windows via python and pip. If you want to go that route fine. What I am about to show you uses cygwin. You might have used something similar to `cygwin` called `MinGW` . If you have ever used the `git bash` shell that comes with `git`. All very similar. Because it is also similar to the native Unix environment `ansible` originated and to keep everyone on the same page I have created a repo on github that has a `install.bat` file you can use to install a light, portable version of `cygwin` with `Ansible` already included.
 
 1. [install.bat](https://raw.githubusercontent.com/eddiedunnteaching/cygwin-noadmin/main/install.bat)
 2. [run_shell.bat](https://raw.githubusercontent.com/eddiedunnteaching/cygwin-noadmin/main/run_shell.bat)
@@ -214,9 +214,7 @@ This will make only the `user owner` able to see the contents of the private key
 ## Take a screen shot and submit. This is the SSH Assignment
 
 
-## Ansible and Windows
 
-There are multiple ways you can go about installing `Ansible` on your system. `Ansible` is written in `Python` and as such can be installed perhaps most easily via `pip`. If you want to go that route fine. What I have just shown you uses cygwin. You might have used something similar to `cygwin` called `MinGW` . If you have ever used the `git bash` shell that comes with `git`. This is very similar.
 
 `Ansible`'s lowest unit of code is called a [`module`](https://docs.ansible.com/ansible/latest/user_guide/modules_intro.html). 
 

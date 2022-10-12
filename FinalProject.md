@@ -144,7 +144,10 @@ There are multiple ways you can go about installing `Ansible` on your system. `A
 
 If you are a Mac or Linux user skip to the next section. If you are Windows... continue on.
 
-You can certainly run Ansible on windows via python and pip. If you want to go that route fine. What I am about to show you uses cygwin. You might have used something similar to `cygwin` called `MinGW` . If you have ever used the `git bash` shell that comes with `git`. All very similar. Because it is also similar to the native Unix environment `ansible` originated and to keep everyone on the same page I have created a repo on github that has a `install.bat` file you can use to install a light, portable version of `cygwin` with `Ansible` already included.
+You can certainly run Ansible on windows via python and pip. If you want to go that route fine. What I am about to show you uses cygwin. You might have used something similar to `cygwin` called `MinGW` . If you have ever used the `git bash` shell that comes with `git`. All very similar. 
+
+Because cygwin is also similar to the native Unix environment `ansible` originated and to keep everyone on the same page I have created a repo on github that has a `install.bat` file you can use to install a light, portable version of `cygwin` with `Ansible` already included.
+
 
 1. [install.bat](https://raw.githubusercontent.com/eddiedunnteaching/cygwin-noadmin/main/install.bat)
 2. [run_shell.bat](https://raw.githubusercontent.com/eddiedunnteaching/cygwin-noadmin/main/run_shell.bat)
@@ -175,7 +178,7 @@ This will take you to your windows home directory.
 ## Ansible and Mac (and Linux)
 
 
-While we are on the subject of Python, Mac and Linux. Mac as well as all Linux distributions I am aware of use Python as part of the operating system so this means there is already a version of python living on your system. You can certainly install packages via `pip` into the system Python installation but I don't recommend it. Have a look at PyEnv.
+While we are on the subject of Python, Mac and Linux. Mac as well as all Linux distributions I am aware of use Python as part of the operating system so this means there is already a version of python living on your system. You can certainly install packages via `pip` into the system Python installation but I don't recommend it. Have a look at [PyEnv](https://github.com/pyenv/pyenv). [^1]
 
 In the case of Mac though I would suggest using `Homebrew`. If you do not already use [`Homebrew`](https://brew.sh/). It is the best. Install it and then run:
 
@@ -392,3 +395,10 @@ You should have:
 Submit your YAML file.
 
 One of the best things about Ansible is that it lets us stand on the shoulders of our digital benefactors and make use of their work in a sane and reapeatable way. The Zen of Automation. This is a perfect example. 
+
+[1]: [PyEnv](https://github.com/pyenv/pyenv) will let you create multiple installations of Python with different versions and packages. Using PyEnv will save you hours of trouble with Python. Pro Tip use a `.python_version` file with just one line that is the name of the python version you want to use and  so you will automatically change into the correct version when you `cd`.
+
+
+
+
+

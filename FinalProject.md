@@ -198,10 +198,13 @@ I will ask you if you want to save the key in your local keystore. Say yes.
 ![success login](./images/success_login.png)
 
 
-If you get an error message about permisions then use the following command on your `.pem` file.
+You will likely get an error message about permisions. 
 
 
 ![unprotected file](./images/unprotected_file.png)
+
+
+Use the following command on your `.pem` file.
 
 
 ```bash
@@ -214,6 +217,9 @@ This will make only the `user owner` able to see the contents of the private key
 ## Take a screen shot and submit. This is the SSH Assignment
 
 
+If you get stuck:
+
+![WSL Where are my files](./vids/WSL_File_Location.mkv)
 
 
 `Ansible`'s lowest unit of code is called a [`module`](https://docs.ansible.com/ansible/latest/user_guide/modules_intro.html). 

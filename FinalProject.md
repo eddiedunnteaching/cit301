@@ -200,6 +200,10 @@ I will ask you if you want to save the key in your local keystore. Say yes.
 
 If you get an error message about permisions then use the following command on your `.pem` file.
 
+
+![unprotected file](./images/unprotected_file.png)
+
+
 ```bash
 chmod 600 kp.pem 
 ```
@@ -398,7 +402,7 @@ One of the best things about Ansible is that it lets us stand on the shoulders o
 Owncloud
 NextCloud
 Mattermost
-seafile
+Seafile
 Piwigo
 iFolder
 Element

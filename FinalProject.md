@@ -138,42 +138,17 @@ Once the launch completes you will get a `Success` message.
 
 Click on the `instance id` link and on the instance summary page click the link to copy the public IP to your clipboard.
 
-There are multiple ways you can go about installing `Ansible` on your system. `Ansible` is written in `Python` and as such can be installed perhaps most easily via `pip`. 
+Ansible can manage Windows hosts but the management hosts must have a more Unix-like enviroment to work properly. If   `Ansible` is written in `Python` so  if you are on a Mac or Linux it can be installed perhaps most easily via `pip`. I will leave that as an exercise for the reader. These steps should work for us.
 
 ## Ansible and Windows
 
 If you are a Mac or Linux user skip to the next section. If you are Windows... continue on.
 
-You can certainly run Ansible on windows via python and pip. If you want to go that route fine. What I am about to show you uses cygwin. You might have used something similar to `cygwin` called `MinGW` . If you have ever used the `git bash` shell that comes with `git`. All very similar. 
+We are going to use something from Microsoft called `Windows Subsystem for Linux`. This is a way to have a more native shell experience in windows. It is also required to run `Ansible`. First the docs:
 
-Because cygwin is also similar to the native Unix environment `ansible` originated and to keep everyone on the same page I have created a repo on github that has a `install.bat` file you can use to install a light, portable version of `cygwin` with `Ansible` already included.
+[Install WSL] (https://learn.microsoft.com/en-us/windows/wsl/install)
 
-
-1. [install.bat](https://raw.githubusercontent.com/eddiedunnteaching/cygwin-noadmin/main/install.bat)
-2. [run_shell.bat](https://raw.githubusercontent.com/eddiedunnteaching/cygwin-noadmin/main/run_shell.bat)
-
-
-- Right-Click and download these file to some directory on your computer.
-- Launch `Command Prompt`
-- Change into the directory that contains the two files you just downloaded
-- run `install.bat`
-
-This will download and install a cygwin installation inside of the direcotory you are currently located.
-
-Now we just need to run `run_shell.bat`
-
-![cygwin_start](./images/cygwin_start.png)
-
-A few things to notice:
-
-1. If you want to work with files in your windows home directory you must know where to look.
-
-```bash
-cd /cygdrive/c/Users/<username>
-```
-
-This will take you to your windows home directory.
-
+![Here is a video demonstration I put together](./vids/WSL_Setup_Video.mkv) 
 
 ## Ansible and Mac (and Linux)
 
@@ -402,8 +377,21 @@ One of the best things about Ansible is that it lets us stand on the shoulders o
 
 
 
+Owncloud
+NextCloud
+Mattermost
+seafile
+Piwigo
+iFolder
+Element
+Emby
+Zimbra
+Wordpress
 
-[1]: [PyEnv](https://github.com/pyenv/pyenv) will let you create multiple installations of Python with different versions and packages. Using PyEnv will save you hours of trouble with Python. Pro Tip use a `.python_version` file with just one line that is the name of the python version you want to use and  so you will automatically change into the correct version when you `cd`.
+
+
+
+[^1]: [PyEnv](https://github.com/pyenv/pyenv) will let you create multiple installations of Python with different versions and packages. Using PyEnv will save you hours of trouble with Python. Pro Tip use a `.python_version` file with just one line that is the name of the python version you want to use and  so you will automatically change into the correct version when you `cd`.
 
 
 

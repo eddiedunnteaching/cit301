@@ -91,7 +91,47 @@ Ansible makes extensive use of `YAML`. Here is a great introduction from the [an
 
 Okay, let's catch our breath. We are starting to get ahead of ourselves.
 
-First we need to see how to connect to our EC2 instances using `SSH`
+First we need to install `Ansible` on our machines:
+
+
+## Ansible and Windows
+
+If you are a Mac or Linux user skip to the next section. If you are Windows... continue on.
+
+We are going to use something from Microsoft called `Windows Subsystem for Linux`. This is a way to have a more native shell experience in windows. It is also required to run `Ansible`. First the docs:
+
+[Install WSL] (https://learn.microsoft.com/en-us/windows/wsl/install)
+
+![Install WSL Video Demonstration](./vids/WSL_Setup_Video.mkv) 
+
+
+Now that part is out of the way let's actually install `Ansible` in our WSL installation. Luckily as always the `Ansible` docs are our friend.
+
+[Installing Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
+
+
+![Install Ansible Video Demonstration](./vids/Ansible_Install_WSL.mkv)
+
+![Windows Important Point - Finding Files](./vids/WSL_WHERE_ARE_MY_FILES.mkv)
+
+
+
+## Ansible and Mac (and Linux)
+
+
+While we are on the subject of Python, Mac and Linux. Mac as well as all Linux distributions I am aware of use Python as part of the operating system so this means there is already a version of python living on your system. You can certainly install packages via `pip` into the system Python installation but I don't recommend it. Have a look at [PyEnv](https://github.com/pyenv/pyenv). [^1]
+
+In the case of Mac though I would suggest using `Homebrew`. If you do not already use [`Homebrew`](https://brew.sh/). It is the best. Install it and then run:
+
+```
+brew install ansible
+```
+
+That's It!
+
+Now that we have `Ansible` installed on just about any OS we might have around let's proceed to the bext step:
+
+How to connect to our EC2 instances using `SSH`?
 
 ## AWS
 
@@ -140,28 +180,6 @@ Click on the `instance id` link and on the instance summary page click the link 
 
 Ansible can manage Windows hosts but the management hosts must have a more Unix-like enviroment to work properly. If   `Ansible` is written in `Python` so  if you are on a Mac or Linux it can be installed perhaps most easily via `pip`. I will leave that as an exercise for the reader. These steps should work for us.
 
-## Ansible and Windows
-
-If you are a Mac or Linux user skip to the next section. If you are Windows... continue on.
-
-We are going to use something from Microsoft called `Windows Subsystem for Linux`. This is a way to have a more native shell experience in windows. It is also required to run `Ansible`. First the docs:
-
-[Install WSL] (https://learn.microsoft.com/en-us/windows/wsl/install)
-
-![Here is a video demonstration I put together](./vids/WSL_Setup_Video.mkv) 
-
-## Ansible and Mac (and Linux)
-
-
-While we are on the subject of Python, Mac and Linux. Mac as well as all Linux distributions I am aware of use Python as part of the operating system so this means there is already a version of python living on your system. You can certainly install packages via `pip` into the system Python installation but I don't recommend it. Have a look at [PyEnv](https://github.com/pyenv/pyenv). [^1]
-
-In the case of Mac though I would suggest using `Homebrew`. If you do not already use [`Homebrew`](https://brew.sh/). It is the best. Install it and then run:
-
-```
-brew install ansible
-```
-
-Alighty! Let's get started.
 
 ## Connecting to the AWS instances via SSH.
 

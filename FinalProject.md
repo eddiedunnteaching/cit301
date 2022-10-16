@@ -394,7 +394,14 @@ You should have:
 
 Submit your YAML file.
 
+
+
+https://t-systems-mms.github.io/ansible-bad-and-good-practices/
+
 One of the best things about Ansible is that it lets us stand on the shoulders of our digital benefactors and make use of their work in a sane and reapeatable way. The Zen of Automation. This is a perfect example. 
+
+
+
 
 [1]: [PyEnv](https://github.com/pyenv/pyenv) will let you create multiple installations of Python with different versions and packages. Using PyEnv will save you hours of trouble with Python. Pro Tip use a `.python_version` file with just one line that is the name of the python version you want to use and  so you will automatically change into the correct version when you `cd`.
 

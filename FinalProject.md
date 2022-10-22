@@ -114,7 +114,7 @@ Now that part is out of the way let's actually install `Ansible` in our WSL inst
 
 ![Windows Important Point - Finding Files](./vids/WSL_WHERE_ARE_MY_FILES.mkv)
 
-
+ß
 
 ## Ansible and Mac (and Linux)
 
@@ -204,10 +204,12 @@ You will likely get an error message about permisions.
 ![unprotected file](./images/unprotected_file.png)
 
 
-Use the following command on your `.pem` file.
+**Windows User Gotcha: Please first copy the `.pem` file from the place you downloaded it to your wsl home directory `cp /mnt/c/Users/<windows user>/Downloads/kp.pem /home/<ubuntu user>/kp.pem`
+Use the following command on your `.pem` file.**
 
 
 ```bash
+cd
 chmod 600 kp.pem 
 ```
 
@@ -395,13 +397,24 @@ You should have:
 2. Place some kind of `Hello World`-y web page as the default page. 
 3. Update all packages and reboot if required.
 
-Submit your YAML file.
+### Submit your YAML file for the assignment submision in Canvas.
 
+Some things to consider:
+
+The lab uses Amazon's version of linux which is Red Hat based so the commands to install software are different.  
+
+If you recall from your linux class. All linux distributions have package managers that are used to update your system, install additional software, manage dependencies, etc. `yum` is the one that Red Hat uses (well technically `dnf`) and `apt` is the one that Ubuntu uses.
+
+
+Two pieces of information that are helpful:
+
+1. There is an ansible module for `apt` that will let you install software
+2. The package is not called `httpd` in `apt` it is called `apache2`
 
 
 https://t-systems-mms.github.io/ansible-bad-and-good-practices/
 
-One of the best things about Ansible is that it lets us stand on the shoulders of our digital benefactors and make use of their work in a sane and reapeatable way. The Zen of Automation. This is a perfect example. 
+One of the best things about Ansible is that it lets us stand on the shoulders of our digital benefactors and make use of their work in a sane and repeatable way. The Zen of Automation. This is a perfect example. 
 
 
 
@@ -415,6 +428,7 @@ Element
 Emby
 Zimbra
 Wordpress
+Plex
 
 
 

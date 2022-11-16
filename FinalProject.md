@@ -231,7 +231,7 @@ If you get stuck:
 The simplest way to run `ansible` in fact runs a module by itself and is called [`ad-hoc`](https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html). As the name implies this is a method that lets you run ansible modules in a one-off manner.
 
 Before you connect to the EC2 instance via ansible we must first make sure that the `host` key has been saved in our `~/.ssh/known_hosts` file. We can do this via `ssh`. 
-
+ 
 If you get an ansible error about `Host key verification failed.` that is what is going on.
 
 Let's try out a simple ping to our EC2 instance.
@@ -416,7 +416,11 @@ https://t-systems-mms.github.io/ansible-bad-and-good-practices/
 
 One of the best things about Ansible is that it lets us stand on the shoulders of our digital benefactors and make use of their work in a sane and repeatable way. The Zen of Automation. This is a perfect example. 
 
+## Final Project
 
+Your final group project is to write an Ansible playbook that installs some kind of software (approved by me) with Ansible. 
+
+Examples could include:
 
 Owncloud
 NextCloud
@@ -429,8 +433,12 @@ Emby
 Zimbra
 Wordpress
 Plex
+Jellyfin
+Duplicati
 
+I have put together two working examples of what I am looking for. 
 
+https://github.com/eddiedunn/mineos-ansible
 
 
 [^1]: [PyEnv](https://github.com/pyenv/pyenv) will let you create multiple installations of Python with different versions and packages. Using PyEnv will save you hours of trouble with Python. Pro Tip use a `.python_version` file with just one line that is the name of the python version you want to use and  so you will automatically change into the correct version when you `cd`.
